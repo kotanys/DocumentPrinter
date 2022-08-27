@@ -1,5 +1,7 @@
 using System.Diagnostics;
+#if DEBUG
 using DocumentPrinter.DebugClasses;
+#endif
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DocumentPrinter
@@ -53,15 +55,8 @@ namespace DocumentPrinter
 
         private static void Print(IEnumerable<string> filesToPrint)
         {
-#if DEBUG
-            foreach (var file in filesToPrint)
-            {
-                Debug.WriteLine($"On Release mode, would print {file}");
-            }
-#else
             var printer = _services.GetRequiredService<IPrinter>();
             printer.Print(filesToPrint);
-#endif
         }
 
         private static IEnumerable<DocumentData> GetDocumentsData()
@@ -79,11 +74,12 @@ namespace DocumentPrinter
 
 #if DEBUG
             ñ.AddSingleton<IDocumentsProvider, PseudoDocumentsProvider>();
+            ñ.AddSingleton<IPrinter, DebugPrinter>();
 #else
             ñ.AddSingleton<IDocumentsProvider, DocumentsProvider>();
+            ñ.AddSingleton<IPrinter, Printer>();
 #endif
             ñ.AddSingleton<IDocumentDataExtracter, DocumentDataExtracter>();
-            ñ.AddSingleton<IPrinter, Printer>();
             ñ.AddSingleton<IFileValidator, FileValidator>();
 
             return ñ.BuildServiceProvider();

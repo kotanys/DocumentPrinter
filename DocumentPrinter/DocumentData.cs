@@ -1,4 +1,4 @@
-﻿namespace DocumentPrinter.Contracts
+﻿namespace DocumentPrinter
 {
     public readonly struct DocumentData
     {
