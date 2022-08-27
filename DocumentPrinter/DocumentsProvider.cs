@@ -2,9 +2,9 @@
 {
     public class DocumentsProvider : IDocumentsProvider
     {
-        private readonly IFileNameValidator _fileNameValidator;
+        private readonly IFileValidator _fileNameValidator;
 
-        public DocumentsProvider(IFileNameValidator fileNameValidator)
+        public DocumentsProvider(IFileValidator fileNameValidator)
         {
             _fileNameValidator = fileNameValidator;
         }
@@ -17,7 +17,7 @@
                 {
                     _fileNameValidator.Validate(file);
                 }
-                catch (FileNameValidationException)
+                catch (FileValidationException)
                 {
                     continue;
                 }

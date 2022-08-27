@@ -82,9 +82,9 @@ namespace DocumentPrinter
 #else
             ñ.AddSingleton<IDocumentsProvider, DocumentsProvider>();
 #endif
-            ñ.AddSingleton<IDocumentDataExtracter, FileNameExtracter>();
+            ñ.AddSingleton<IDocumentDataExtracter, DocumentDataExtracter>();
             ñ.AddSingleton<IPrinter, Printer>();
-            ñ.AddSingleton<IFileNameValidator, FileNameValidator>();
+            ñ.AddSingleton<IFileValidator, FileValidator>();
 
             return ñ.BuildServiceProvider();
         }

@@ -1,6 +1,6 @@
 ﻿namespace DocumentPrinter
 {
-    public class FileNameValidator : IFileNameValidator
+    public class FileValidator : IFileValidator
     {
         private const string Separator = ".";
         private static readonly string[] JpgExtensions = { ".jpg", ".jpeg" };
@@ -21,7 +21,7 @@
         private static void ThrowIf(bool condition, string message)
         {
             if (condition)
-                throw new FileNameValidationException(message, FileNameFormat);
+                throw new FileValidationException(message, FileNameFormat);
         }
 
         private static bool ExtensionArrayContains(ReadOnlySpan<char> extension)
@@ -37,9 +37,9 @@
         }
     }
 
-    public class FileNameValidationException : Exception
+    public class FileValidationException : Exception
     {
-        public FileNameValidationException(string message, string fileNameFormat) : base(message)
+        public FileValidationException(string message, string fileNameFormat) : base(message)
         {
             FileNameFormat = fileNameFormat;
         }

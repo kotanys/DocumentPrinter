@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentPrinter", "DocumentPrinter\DocumentPrinter.csproj", "{4F5457CA-C337-4D8F-8AAA-7745A01B2027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentPrinter", "DocumentPrinter\DocumentPrinter.csproj", "{4F5457CA-C337-4D8F-8AAA-7745A01B2027}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentPrinter.Tests", "DocumentPrinter.Tests\DocumentPrinter.Tests.csproj", "{DBE62108-6C22-4965-8DC7-C4DA174B77A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4F5457CA-C337-4D8F-8AAA-7745A01B2027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F5457CA-C337-4D8F-8AAA-7745A01B2027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F5457CA-C337-4D8F-8AAA-7745A01B2027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE62108-6C22-4965-8DC7-C4DA174B77A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE62108-6C22-4965-8DC7-C4DA174B77A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE62108-6C22-4965-8DC7-C4DA174B77A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE62108-6C22-4965-8DC7-C4DA174B77A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

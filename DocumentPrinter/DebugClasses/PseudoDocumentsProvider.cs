@@ -1,6 +1,6 @@
 ﻿namespace DocumentPrinter.DebugClasses
 {
-    public class PseudoDocumentsProvider : IDocumentsProvider
+    internal class PseudoDocumentsProvider : IDocumentsProvider
     {
         public IEnumerable<string> GetDocumentFileNames()
         {

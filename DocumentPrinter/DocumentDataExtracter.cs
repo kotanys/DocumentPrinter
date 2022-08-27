@@ -1,12 +1,12 @@
 ﻿namespace DocumentPrinter
 {
-    public class FileNameExtracter : IDocumentDataExtracter
+    public class DocumentDataExtracter : IDocumentDataExtracter
     {
         private const string Separator = ".";
 
-        private readonly IFileNameValidator _validator;
+        private readonly IFileValidator _validator;
 
-        public FileNameExtracter(IFileNameValidator validator)
+        public DocumentDataExtracter(IFileValidator validator)
         {
             _validator = validator;
         }

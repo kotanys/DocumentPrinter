@@ -1,6 +1,6 @@
 ﻿namespace DocumentPrinter.Contracts
 {
-    public interface IFileNameValidator
+    public interface IFileValidator
     {
         void Validate(string filePath);
     }
