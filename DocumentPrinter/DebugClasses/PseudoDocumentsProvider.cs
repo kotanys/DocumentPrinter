@@ -1,4 +1,5 @@
-﻿namespace DocumentPrinter.DebugClasses
+﻿#if DEBUG
+namespace DocumentPrinter.DebugClasses
 {
     internal class PseudoDocumentsProvider : IDocumentsProvider
     {
@@ -12,3 +13,4 @@
         }
     }
 }
+#endif
