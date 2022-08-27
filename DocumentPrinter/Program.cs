@@ -9,30 +9,40 @@ namespace DocumentPrinter
     internal static class Program
     {
         private static readonly IServiceProvider _services = BuildServiceProvider();
-        private static IEnumerable<DocumentData> _documents = GetDocumentsData();
+        private static readonly IEnumerable<DocumentData> _documents = GetDocumentsData();
 
         [STAThread]
         private static int Main()
         {
             ApplicationConfiguration.Initialize();
 
-            var chosenName = GetOwnerName();
-            if (chosenName is null)
+            do
             {
-                Debug.WriteLine("No name was chosen. Exiting app.");
-                return 1;
-            }
+                var chosenName = GetOwnerName();
+                if (chosenName is null)
+                {
+                    Debug.WriteLine("No name was chosen. Exiting app.");
+                    return 1;
+                }
 
-            var chosenDocuments = GetDocumentNames(chosenName);
-            if (!chosenDocuments.Any())
-            {
-                Debug.WriteLine("No document was chosen. Exiting app.");
-                return 1;
-            }
+                var chosenDocuments = GetDocumentNames(chosenName);
+                if (!chosenDocuments.Any())
+                {
+                    Debug.WriteLine("No document was chosen. Exiting app.");
+                    return 1;
+                }
 
-            var filesToPrint = _documents.Where(d => chosenDocuments.Contains(d.DocumentName));
-            Print(filesToPrint.Select(f => f.FileName));
+                var filesToPrint = _documents.Where(d => chosenName == d.OwnerName && chosenDocuments.Contains(d.DocumentName));
+                Print(filesToPrint.Select(f => f.FileName));
+            }
+            while (DoRunAgain());
             return 0;
+        }
+
+        private static bool DoRunAgain()
+        {
+            var dialogResult = MessageBox.Show("Распечатать ещё?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            return dialogResult == DialogResult.Yes;
         }
 
         private static string? GetOwnerName()
@@ -45,9 +55,9 @@ namespace DocumentPrinter
 
         private static IEnumerable<string> GetDocumentNames(string chosenName)
         {
-            _documents = _documents.Where(d => d.OwnerName == chosenName);
+            var documentsFiltered = _documents.Where(d => d.OwnerName == chosenName);
             var choiceForm = new ChooseDocumentsForm(
-                _documents.Select(d => d.DocumentName).Distinct());
+                documentsFiltered.Select(d => d.DocumentName).Distinct());
             Application.Run(choiceForm);
             choiceForm.Dispose();
             return choiceForm.Results;

@@ -4,48 +4,68 @@ namespace DocumentPrinter
 {
     public class Printer : IPrinter
     {
-        public void Print(string file)
-        {
-            if (GetPrinterSettings() is not { } settings)
-            {
-                return;
-            }
-            Print(file, settings);
-        }
-
         public void Print(IEnumerable<string> files)
         {
-            if (GetPrinterSettings() is not { } settings)
-            {
-                return;
-            }
-            foreach (var file in files)
-            {
-                Print(file, settings);
-            }
+            using var session = new PrintSession(files);
+            session.Print();
         }
 
-        private static void Print(string file, PrinterSettings settings)
+        private class PrintSession : IDisposable
         {
-            using var document = new PrintDocument();
-            document.PrintPage += (sender, e) =>
+            private readonly PrintDocument _document = new()
             {
-                using var image = Image.FromFile(file);
-                e.Graphics!.DrawImage(image, Point.Empty);
+                DocumentName = "Файлы DocumentPrinter"
             };
-            document.PrinterSettings = settings;
-            document.Print();
-        }
+            private readonly IEnumerator<string> _fileEnumerator;
 
-        private static PrinterSettings? GetPrinterSettings()
-        {
-            using var printDialog = new PrintDialog();
-            var dialogResult = printDialog.ShowDialog();
-            if (dialogResult != DialogResult.OK)
+            public PrintSession(IEnumerable<string> files)
             {
-                return null;
+                var fileList = new List<string>(files.Count());
+                fileList.AddRange(files);
+                _fileEnumerator = fileList.GetEnumerator();
+
+                _document.BeginPrint += BeginPrintHandler;
+                _document.PrintPage += PrintPageHandler;
             }
-            return printDialog.PrinterSettings;
+
+            public void Print()
+            {
+                _fileEnumerator.Reset();
+                if (!_fileEnumerator.MoveNext())
+                {
+                    return;
+                }
+                _document.Print();
+            }
+
+            private void PrintPageHandler(object sender, PrintPageEventArgs e)
+            {
+                e.Graphics?.Clear(Color.White);
+                using var image = Image.FromFile(_fileEnumerator.Current);
+                e.Graphics?.DrawImage(image, Point.Empty);
+                e.HasMorePages = _fileEnumerator.MoveNext();
+            }
+
+            private void BeginPrintHandler(object sender, PrintEventArgs e)
+            {
+                using var printDialog = new PrintDialog
+                {
+                    Document = _document
+                };
+                var dialogResult = printDialog.ShowDialog();
+                if (dialogResult != DialogResult.OK)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                _document.PrinterSettings = printDialog.PrinterSettings;
+            }
+
+            public void Dispose()
+            {
+                _document.Dispose();
+                _fileEnumerator.Dispose();
+            }
         }
     }
 }
