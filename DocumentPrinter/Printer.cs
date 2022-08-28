@@ -20,9 +20,7 @@ namespace DocumentPrinter
 
             public PrintSession(IEnumerable<string> files)
             {
-                var fileList = new List<string>(files.Count());
-                fileList.AddRange(files);
-                _fileEnumerator = fileList.GetEnumerator();
+                _fileEnumerator = files.ToList().GetEnumerator();
 
                 _document.BeginPrint += BeginPrintHandler;
                 _document.PrintPage += PrintPageHandler;

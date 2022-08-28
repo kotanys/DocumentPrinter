@@ -2,6 +2,7 @@ using System.Diagnostics;
 #if DEBUG
 using DocumentPrinter.DebugClasses;
 #endif
+using DocumentPrinter.Forms;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DocumentPrinter

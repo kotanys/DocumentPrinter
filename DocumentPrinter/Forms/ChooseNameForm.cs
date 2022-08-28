@@ -1,4 +1,4 @@
-﻿namespace DocumentPrinter
+﻿namespace DocumentPrinter.Forms
 {
     public partial class ChooseNameForm : Form
     {
