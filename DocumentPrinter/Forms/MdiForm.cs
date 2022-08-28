@@ -4,8 +4,6 @@ namespace DocumentPrinter.Forms
 {
     public partial class MdiForm : Form
     {
-        private const string AmountOfChosenDocumentsMessage = "Выбрано: {0}";
-
         private readonly IDocumentsProvider _documentsProvider;
         private readonly IDocumentDataExtracter _documentDataExtracter;
         private readonly IPrinter _printer;

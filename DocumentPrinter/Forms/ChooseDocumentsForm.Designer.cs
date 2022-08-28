@@ -26,21 +26,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.docsListBox = new System.Windows.Forms.CheckedListBox();
+            this.documentNameListBox = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
-            // docsListBox
+            // documentNameListBox
             // 
-            this.docsListBox.BackColor = System.Drawing.SystemColors.Control;
-            this.docsListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.docsListBox.CheckOnClick = true;
-            this.docsListBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.docsListBox.FormattingEnabled = true;
-            this.docsListBox.Location = new System.Drawing.Point(0, 0);
-            this.docsListBox.Margin = new System.Windows.Forms.Padding(5);
-            this.docsListBox.Name = "docsListBox";
-            this.docsListBox.Size = new System.Drawing.Size(129, 18);
-            this.docsListBox.TabIndex = 0;
+            this.documentNameListBox.BackColor = System.Drawing.SystemColors.Control;
+            this.documentNameListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.documentNameListBox.CheckOnClick = true;
+            this.documentNameListBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.documentNameListBox.FormattingEnabled = true;
+            this.documentNameListBox.Location = new System.Drawing.Point(0, 0);
+            this.documentNameListBox.Margin = new System.Windows.Forms.Padding(5);
+            this.documentNameListBox.Name = "documentNameListBox";
+            this.documentNameListBox.Size = new System.Drawing.Size(129, 18);
+            this.documentNameListBox.TabIndex = 0;
             // 
             // ChooseDocumentsForm
             // 
@@ -48,14 +48,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(129, 48);
             this.ControlBox = false;
-            this.Controls.Add(this.docsListBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Controls.Add(this.documentNameListBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ChooseDocumentsForm";
             this.Text = "Выберите документы";
             this.Load += new System.EventHandler(this.FormLoadHandler);
             this.ResumeLayout(false);
 
         }
-        private CheckedListBox docsListBox;
+        private CheckedListBox documentNameListBox;
     }
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 #if DEBUG
 using DocumentPrinter.DebugClasses;
 #endif

@@ -25,6 +25,8 @@ namespace DocumentPrinter.Forms
         {
             AddButtons(_elements);
             Height = ButtonHeight * (_radioButtons.Count + 2);
+            MinimumSize = Size;
+            MaximumSize = Size with { Width = Size.Width * 2 };
         }
 
         private void AddButtons(IEnumerable<string> names)
@@ -67,6 +69,22 @@ namespace DocumentPrinter.Forms
             }
             _selectedRadioButton = clicked;
             OnNameSwitched?.Invoke(this, new(clicked.Text));
+        }
+
+        /// <summary>
+        /// для правильной работы курсора
+        /// </summary>
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == 0x84) //WM_NCHITTEST
+                m.Result = (HitTest)m.Result switch
+                {
+                    HitTest.Top or HitTest.Bottom => (nint)HitTest.Caption,
+                    HitTest.TopLeft or HitTest.BottomLeft => (nint)HitTest.Left,
+                    HitTest.TopRight or HitTest.BottomRight => (nint)HitTest.Right,
+                    _ => m.Result
+                };
         }
     }
 }

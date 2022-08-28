@@ -12,7 +12,7 @@ namespace DocumentPrinter.Forms
         {
             get
             {
-                foreach (int i in docsListBox.CheckedIndices)
+                foreach (int i in documentNameListBox.CheckedIndices)
                 {
                     yield return _elements[i];
                 }
@@ -28,7 +28,9 @@ namespace DocumentPrinter.Forms
         private void FormLoadHandler(object sender, EventArgs e)
         {
             AddButtons(_elements);
-            Height = ButtonHeight * (docsListBox.Items.Count + 2);
+            Height = ButtonHeight * (documentNameListBox.Items.Count + 2);
+            MinimumSize = Size;
+            MaximumSize = Size with { Width = Size.Width * 2 };
         }
 
         private void AddButtons(IEnumerable<DocumentData> datas)
@@ -36,18 +38,34 @@ namespace DocumentPrinter.Forms
             int heightForListBox = 0;
             foreach (var data in datas)
             {
-                docsListBox.Items.Add(data.DocumentName);
+                documentNameListBox.Items.Add(data.DocumentName);
                 heightForListBox += ButtonHeight;
             }
-            docsListBox.Height = heightForListBox;
+            documentNameListBox.Height = heightForListBox;
         }
 
         public void RemoveAllSelection()
         {
-            for (int i = 0; i < docsListBox.Items.Count; i++)
+            for (int i = 0; i < documentNameListBox.Items.Count; i++)
             {
-                docsListBox.SetItemChecked(i, false);
+                documentNameListBox.SetItemChecked(i, false);
             }
+        }
+
+        /// <summary>
+        /// для правильной работы курсора
+        /// </summary>
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == 0x84) //WM_NCHITTEST
+                m.Result = (HitTest) m.Result switch
+                {
+                    HitTest.Top or HitTest.Bottom => (nint)HitTest.Caption,
+                    HitTest.TopLeft or HitTest.BottomLeft => (nint)HitTest.Left,
+                    HitTest.TopRight or HitTest.BottomRight => (nint)HitTest.Right,
+                    _ => m.Result
+                };
         }
     }
 }
