@@ -1,7 +1,9 @@
-﻿namespace DocumentPrinter.Contracts
+﻿using DocumentPrinter.Models;
+
+namespace DocumentPrinter.Contracts
 {
     public interface IPrinter
     {
-        void Print(IEnumerable<string> files);
+        void Print(IEnumerable<DocumentData> files);
     }
 }

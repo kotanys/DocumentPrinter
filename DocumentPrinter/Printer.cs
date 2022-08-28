@@ -1,10 +1,11 @@
 ﻿using System.Drawing.Printing;
+using DocumentPrinter.Models;
 
 namespace DocumentPrinter
 {
     public class Printer : IPrinter
     {
-        public void Print(IEnumerable<string> files)
+        public void Print(IEnumerable<DocumentData> files)
         {
             using var session = new PrintSession(files);
             session.Print();
@@ -16,9 +17,9 @@ namespace DocumentPrinter
             {
                 DocumentName = "Файлы DocumentPrinter"
             };
-            private readonly IEnumerator<string> _fileEnumerator;
+            private readonly IEnumerator<DocumentData> _fileEnumerator;
 
-            public PrintSession(IEnumerable<string> files)
+            public PrintSession(IEnumerable<DocumentData> files)
             {
                 _fileEnumerator = files.ToList().GetEnumerator();
 
@@ -39,7 +40,7 @@ namespace DocumentPrinter
             private void PrintPageHandler(object sender, PrintPageEventArgs e)
             {
                 e.Graphics?.Clear(Color.White);
-                using var image = Image.FromFile(_fileEnumerator.Current);
+                using var image = Image.FromFile(_fileEnumerator.Current.FileName);
                 e.Graphics?.DrawImage(image, Point.Empty);
                 e.HasMorePages = _fileEnumerator.MoveNext();
             }

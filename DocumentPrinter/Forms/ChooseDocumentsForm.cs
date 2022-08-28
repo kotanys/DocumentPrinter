@@ -1,28 +1,28 @@
-﻿namespace DocumentPrinter.Forms
+﻿using DocumentPrinter.Models;
+
+namespace DocumentPrinter.Forms
 {
     public partial class ChooseDocumentsForm : Form
     {
         private const int ButtonHeight = 20;
 
-        private readonly IEnumerable<string> _elements;
+        private readonly DocumentData[] _elements;
 
-        public IEnumerable<string> Result
+        public IEnumerable<DocumentData> Result
         {
             get
             {
-                foreach (var checkedElement in docsListBox.CheckedItems)
+                foreach (int i in docsListBox.CheckedIndices)
                 {
-                    if (checkedElement is null)
-                        continue;
-                    yield return checkedElement.ToString()!;
+                    yield return _elements[i];
                 }
             }
         }
 
-        public ChooseDocumentsForm(IEnumerable<string> elements)
+        public ChooseDocumentsForm(IEnumerable<DocumentData> elements)
         {
             InitializeComponent();
-            _elements = elements;
+            _elements = elements.ToArray();
         }
 
         private void FormLoadHandler(object sender, EventArgs e)
@@ -31,12 +31,12 @@
             Height = ButtonHeight * (docsListBox.Items.Count + 2);
         }
 
-        private void AddButtons(IEnumerable<string> names)
+        private void AddButtons(IEnumerable<DocumentData> datas)
         {
             int heightForListBox = 0;
-            foreach (var name in names)
+            foreach (var data in datas)
             {
-                docsListBox.Items.Add(name);
+                docsListBox.Items.Add(data.DocumentName);
                 heightForListBox += ButtonHeight;
             }
             docsListBox.Height = heightForListBox;

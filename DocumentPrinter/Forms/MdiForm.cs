@@ -4,6 +4,8 @@ namespace DocumentPrinter.Forms
 {
     public partial class MdiForm : Form
     {
+        private const string AmountOfChosenDocumentsMessage = "Выбрано: {0}";
+
         private readonly IDocumentsProvider _documentsProvider;
         private readonly IDocumentDataExtracter _documentDataExtracter;
         private readonly IPrinter _printer;
@@ -26,10 +28,11 @@ namespace DocumentPrinter.Forms
             _nameForm = CreateChooseNameForm();
             foreach (var documents in GetDatasDistinctByName(_documents))
             {
-                var form = CreateChooseDocumentForm(documents.Select(d => d.DocumentName));
+                var form = CreateChooseDocumentForm(documents);
                 _documentForms[documents.First().OwnerName] = form;
             }
             _nameForm.Show();
+
             _nameForm.OnNameSwitched += OnNameSwitchedHandler;
         }
 
@@ -57,9 +60,9 @@ namespace DocumentPrinter.Forms
             };
         }
 
-        private ChooseDocumentsForm CreateChooseDocumentForm(IEnumerable<string> documentNames)
+        private ChooseDocumentsForm CreateChooseDocumentForm(IEnumerable<DocumentData> documents)
         {
-            return new ChooseDocumentsForm(documentNames)
+            return new ChooseDocumentsForm(documents)
             {
                 MdiParent = this
             };
@@ -89,7 +92,8 @@ namespace DocumentPrinter.Forms
 
         private void PrintButtonClickHandler(object sender, EventArgs e)
         {
-            //TODO
+            var toPrint = _documentForms.Values.SelectMany(f => f.Result);
+            _printer.Print(toPrint);
         }
     }
 }
