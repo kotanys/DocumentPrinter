@@ -6,7 +6,7 @@
 
         private readonly IEnumerable<string> _elements;
 
-        public IEnumerable<string> Results
+        public IEnumerable<string> Result
         {
             get
             {
@@ -28,7 +28,7 @@
         private void FormLoadHandler(object sender, EventArgs e)
         {
             AddButtons(_elements);
-            Height = (int)(ButtonHeight * (docsListBox.Items.Count + 3.5));
+            Height = ButtonHeight * (docsListBox.Items.Count + 2);
         }
 
         private void AddButtons(IEnumerable<string> names)
@@ -42,13 +42,12 @@
             docsListBox.Height = heightForListBox;
         }
 
-        private void ConfirmClickHandler(object sender, EventArgs e)
+        public void RemoveAllSelection()
         {
-            if (docsListBox.CheckedItems.Count == 0)
+            for (int i = 0; i < docsListBox.Items.Count; i++)
             {
-                return;
+                docsListBox.SetItemChecked(i, false);
             }
-            Close();
         }
     }
 }

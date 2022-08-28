@@ -1,4 +1,6 @@
-﻿namespace DocumentPrinter.Forms
+﻿using DocumentPrinter.Models;
+
+namespace DocumentPrinter.Forms
 {
     public partial class ChooseNameForm : Form
     {
@@ -11,6 +13,8 @@
 
         public string? Result => _selectedRadioButton?.Text;
 
+        public event EventHandler<ChosenNameEditedEventArgs>? OnNameSwitched;
+
         public ChooseNameForm(IEnumerable<string> elements)
         {
             InitializeComponent();
@@ -20,7 +24,7 @@
         private void FormLoadHandler(object sender, EventArgs e)
         {
             AddButtons(_elements);
-            Height = (int)(ButtonHeight * (_radioButtons.Count + 3.5));
+            Height = ButtonHeight * (_radioButtons.Count + 2);
         }
 
         private void AddButtons(IEnumerable<string> names)
@@ -57,16 +61,12 @@
             {
                 throw new InvalidOperationException("This event handler must be invoked by RadioButton");
             }
-            _selectedRadioButton = clicked;
-        }
-
-        private void ConfirmClickHandler(object sender, EventArgs e)
-        {
-            if (_selectedRadioButton is null)
+            if (ReferenceEquals(clicked, _selectedRadioButton))
             {
                 return;
             }
-            Close();
+            _selectedRadioButton = clicked;
+            OnNameSwitched?.Invoke(this, new(clicked.Text));
         }
     }
 }

@@ -26,21 +26,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.confirmButton = new System.Windows.Forms.Button();
             this.docsListBox = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
-            // 
-            // confirmButton
-            // 
-            this.confirmButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.confirmButton.Location = new System.Drawing.Point(21, 23);
-            this.confirmButton.Name = "confirmButton";
-            this.confirmButton.Size = new System.Drawing.Size(84, 23);
-            this.confirmButton.TabIndex = 1;
-            this.confirmButton.Text = "Выбрать";
-            this.confirmButton.UseVisualStyleBackColor = true;
-            this.confirmButton.Click += new System.EventHandler(this.ConfirmClickHandler);
             // 
             // docsListBox
             // 
@@ -62,7 +49,6 @@
             this.ClientSize = new System.Drawing.Size(129, 48);
             this.ControlBox = false;
             this.Controls.Add(this.docsListBox);
-            this.Controls.Add(this.confirmButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ChooseDocumentsForm";
             this.Text = "Выберите документы";
@@ -70,8 +56,6 @@
             this.ResumeLayout(false);
 
         }
-
-        private Button confirmButton;
         private CheckedListBox docsListBox;
     }
 }

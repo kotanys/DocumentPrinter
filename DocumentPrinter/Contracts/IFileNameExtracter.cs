@@ -1,4 +1,6 @@
-﻿namespace DocumentPrinter.Contracts
+﻿using DocumentPrinter.Models;
+
+namespace DocumentPrinter.Contracts
 {
     public interface IDocumentDataExtracter
     {

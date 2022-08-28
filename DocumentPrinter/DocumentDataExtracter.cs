@@ -1,4 +1,6 @@
-﻿namespace DocumentPrinter
+﻿using DocumentPrinter.Models;
+
+namespace DocumentPrinter
 {
     public class DocumentDataExtracter : IDocumentDataExtracter
     {
