@@ -7,12 +7,11 @@ namespace DocumentPrinter.Forms
         private readonly IDocumentsProvider _documentsProvider;
         private readonly IDocumentDataExtracter _documentDataExtracter;
         private readonly IPrinter _printer;
-        private readonly IEnumerable<DocumentData> _documents;
+        private readonly DocumentData[] _documents;
 
         private ChooseDocumentsForm? _currentdocumentsForm;
         private readonly Dictionary<string, ChooseDocumentsForm> _documentForms = new();
         private readonly ChooseNameForm _nameForm;
-
 
         public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer)
         {
@@ -20,7 +19,7 @@ namespace DocumentPrinter.Forms
             _documentDataExtracter = documentDataExtracter;
             _printer = printer;
             var files = _documentsProvider.GetDocumentFileNames();
-            _documents = files.Select(_documentDataExtracter.Extract);
+            _documents = files.Select(_documentDataExtracter.Extract).ToArray();
 
             InitializeComponent();
             _nameForm = CreateChooseNameForm();
@@ -36,18 +35,11 @@ namespace DocumentPrinter.Forms
 
         private void OnNameSwitchedHandler(object? sender, ChosenNameEditedEventArgs e)
         {
-            Point? lastLocation = null;
-            if (_currentdocumentsForm is not null)
-            {
-                _currentdocumentsForm.Hide();
-                lastLocation = _currentdocumentsForm.Location;
-            }
+            var lastFormSettings = FormSettings.GetFrom(_currentdocumentsForm ?? _documentForms.First().Value);
+            _currentdocumentsForm?.Hide();
             _currentdocumentsForm = _documentForms[e.Name];
             _currentdocumentsForm.Show();
-            if (lastLocation is not null)
-            {
-                _currentdocumentsForm.Location = lastLocation.Value;
-            }
+            lastFormSettings?.SetTo(_currentdocumentsForm);
         }
 
         private ChooseNameForm CreateChooseNameForm()
@@ -92,6 +84,20 @@ namespace DocumentPrinter.Forms
         {
             var toPrint = _documentForms.Values.SelectMany(f => f.Result);
             _printer.Print(toPrint);
+        }
+
+        private record FormSettings(Point Location, Size Size)
+        {
+            public void SetTo(Form form)
+            {
+                form.Location = Location;
+                form.Size = Size;
+            }
+
+            public static FormSettings GetFrom(Form form)
+            {
+                return new FormSettings(form.Location, form.Size);
+            }
         }
     }
 }
