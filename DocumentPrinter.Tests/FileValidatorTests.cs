@@ -1,6 +1,4 @@
-﻿using System.Reflection.Emit;
-
-namespace DocumentPrinter.Tests
+﻿namespace DocumentPrinter.Tests
 {
     public class FileValidatorTests
     {

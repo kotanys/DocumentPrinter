@@ -1,4 +1,5 @@
 using DocumentPrinter.Contracts;
+using DocumentPrinter.Models;
 
 namespace DocumentPrinter.Tests
 {
