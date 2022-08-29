@@ -41,6 +41,7 @@
             this.documentNameListBox.Name = "documentNameListBox";
             this.documentNameListBox.Size = new System.Drawing.Size(129, 18);
             this.documentNameListBox.TabIndex = 0;
+            this.documentNameListBox.SelectedValueChanged += new System.EventHandler(this.documentNameListBox_SelectedValueChanged);
             // 
             // ChooseDocumentsForm
             // 

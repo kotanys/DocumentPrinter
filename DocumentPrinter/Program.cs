@@ -20,20 +20,22 @@ namespace DocumentPrinter
         
         private static IServiceProvider BuildServiceProvider()
         {
-            var ñ = new ServiceCollection();
-
+            var services = new ServiceCollection();
+            
 #if DEBUG
-            ñ.AddSingleton<IDocumentsProvider, PseudoDocumentsProvider>();
-            ñ.AddSingleton<IPrinter, DebugPrinter>();
+            services.AddSingleton<IDocumentsProvider, PseudoDocumentsProvider>();
+            services.AddSingleton<IPrinter, DebugPrinter>();
+            services.AddSingleton<IFileOpener, DebugFileOpener>();
 #else
-            ñ.AddSingleton<IDocumentsProvider, DocumentsProvider>();
-            ñ.AddSingleton<IPrinter, Printer>();
+            services.AddSingleton<IDocumentsProvider, DocumentsProvider>();
+            services.AddSingleton<IPrinter, Printer>();
+            services.AddSingleton<IFileOpener, FileOpener>();
 #endif
-            ñ.AddSingleton<IDocumentDataExtracter, DocumentDataExtracter>();
-            ñ.AddSingleton<IFileValidator, FileValidator>();
-            ñ.AddTransient<MdiForm>();
+            services.AddSingleton<IDocumentDataExtracter, DocumentDataExtracter>();
+            services.AddSingleton<IFileValidator, FileValidator>();
+            services.AddTransient<MdiForm>();
 
-            return ñ.BuildServiceProvider();
+            return services.BuildServiceProvider();
         }
     }
 }

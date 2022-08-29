@@ -32,13 +32,16 @@
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripMenuItem();
             this.clearSelectionButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem});
+            this.файлToolStripMenuItem,
+            this.видToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(434, 24);
@@ -57,16 +60,31 @@
             // printButton
             // 
             this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(165, 22);
+            this.printButton.Size = new System.Drawing.Size(180, 22);
             this.printButton.Text = "Печать";
             this.printButton.Click += new System.EventHandler(this.PrintButtonClickHandler);
             // 
             // clearSelectionButton
             // 
             this.clearSelectionButton.Name = "clearSelectionButton";
-            this.clearSelectionButton.Size = new System.Drawing.Size(165, 22);
+            this.clearSelectionButton.Size = new System.Drawing.Size(180, 22);
             this.clearSelectionButton.Text = "Очистить выбор";
             this.clearSelectionButton.Click += new System.EventHandler(this.ClearSelectionButtonClickHandler);
+            // 
+            // видToolStripMenuItem
+            // 
+            this.видToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.видToolStripMenuItem.Name = "видToolStripMenuItem";
+            this.видToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.видToolStripMenuItem.Text = "Вид";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
+            this.toolStripMenuItem1.Text = "Выбранные документы";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.ChosenDocumentsButtonClickHandler);
             // 
             // MdiForm
             // 
@@ -95,5 +113,7 @@
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem clearSelectionButton;
         private ToolStripMenuItem printButton;
+        private ToolStripMenuItem видToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }

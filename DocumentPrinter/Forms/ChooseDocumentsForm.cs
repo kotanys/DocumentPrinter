@@ -6,9 +6,10 @@ namespace DocumentPrinter.Forms
     {
         private const int ButtonHeight = 20;
 
+        private CheckState[] _selectedIndices = Array.Empty<CheckState>();
         private readonly DocumentData[] _elements;
 
-        public IEnumerable<DocumentData> Result
+        public IEnumerable<DocumentData> ChosenDocuments
         {
             get
             {
@@ -18,6 +19,8 @@ namespace DocumentPrinter.Forms
                 }
             }
         }
+
+        public event EventHandler<CheckStateChangedEventArgs>? DocumentCheckStateChanged;
 
         public ChooseDocumentsForm(IEnumerable<DocumentData> elements)
         {
@@ -31,6 +34,7 @@ namespace DocumentPrinter.Forms
             Height = ButtonHeight * (documentNameListBox.Items.Count + 2);
             MinimumSize = Size;
             MaximumSize = Size with { Width = Size.Width * 2 };
+            _selectedIndices = new CheckState[documentNameListBox.Items.Count];
         }
 
         private void AddButtons(IEnumerable<DocumentData> datas)
@@ -66,6 +70,24 @@ namespace DocumentPrinter.Forms
                     HitTest.TopRight or HitTest.BottomRight => (nint)HitTest.Right,
                     _ => m.Result
                 };
+        }
+
+        private void documentNameListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            CheckStateChangedEventArgs eventArgs;
+            for (int i = 0; i < documentNameListBox.Items.Count; i++)
+            {
+                CheckState checkStateOfCurrentButton = documentNameListBox.GetItemCheckState(i);
+                if (checkStateOfCurrentButton != _selectedIndices[i])
+                {
+                    eventArgs = new CheckStateChangedEventArgs
+                    {
+                        NewState = _selectedIndices[i] = checkStateOfCurrentButton,
+                        Value = documentNameListBox.Items[i].ToString()!
+                    };
+                    DocumentCheckStateChanged?.Invoke(this, eventArgs);
+                }
+            }
         }
     }
 }

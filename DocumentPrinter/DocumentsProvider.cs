@@ -11,7 +11,7 @@
 
         public IEnumerable<string> GetDocumentFileNames()
         {
-            foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory))
+            foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory + @"\Documents"))
             {
                 try
                 {

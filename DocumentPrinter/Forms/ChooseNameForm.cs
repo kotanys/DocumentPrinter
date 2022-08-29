@@ -11,9 +11,9 @@ namespace DocumentPrinter.Forms
         private readonly IEnumerable<string> _elements;
         private RadioButton? _selectedRadioButton;
 
-        public string? Result => _selectedRadioButton?.Text;
+        public string? CurrentName => _selectedRadioButton?.Text;
 
-        public event EventHandler<ChosenNameEditedEventArgs>? OnNameSwitched;
+        public event EventHandler<ChosenNameEditedEventArgs>? NameSwitched;
 
         public ChooseNameForm(IEnumerable<string> elements)
         {
@@ -68,7 +68,7 @@ namespace DocumentPrinter.Forms
                 return;
             }
             _selectedRadioButton = clicked;
-            OnNameSwitched?.Invoke(this, new(clicked.Text));
+            NameSwitched?.Invoke(this, new(clicked.Text));
         }
 
         /// <summary>

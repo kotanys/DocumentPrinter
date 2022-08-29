@@ -11,7 +11,7 @@ namespace DocumentPrinter
             session.Print();
         }
 
-        private class PrintSession : IDisposable
+        private struct PrintSession : IDisposable
         {
             private readonly PrintDocument _document = new()
             {
