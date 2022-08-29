@@ -21,6 +21,11 @@
             listBox.Items.Remove(element);
         }
 
+        public void RemoveAll()
+        {
+            listBox.Items.Clear();
+        }
+
         private void CheckedDocumentsListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;

@@ -101,22 +101,9 @@ namespace DocumentPrinter.Forms
             _fileOpener.Open(file);
         }
 
-        private static IEnumerable<IEnumerable<DocumentData>> GetDatasDistinctByName(IEnumerable<DocumentData> documents)
-        {
-            var dictionary = new Dictionary<string, List<DocumentData>>();
-            foreach (var document in documents)
-            {
-                if (!dictionary.TryGetValue(document.OwnerName, out _))
-                {
-                    dictionary[document.OwnerName] = new List<DocumentData>();
-                }
-                dictionary[document.OwnerName].Add(document);
-            }
-            return dictionary.Values;
-        }
-
         private void ClearSelectionButtonClickHandler(object sender, EventArgs e)
         {
+            _checkedDocumentsListForm.RemoveAll();
             foreach (var docsForm in _documentForms.Values)
             {
                 docsForm.RemoveAllSelection();
@@ -132,6 +119,20 @@ namespace DocumentPrinter.Forms
         private void ChosenDocumentsButtonClickHandler(object sender, EventArgs e)
         {
             _checkedDocumentsListForm.Show();
+        }
+
+        private static IEnumerable<IEnumerable<DocumentData>> GetDatasDistinctByName(IEnumerable<DocumentData> documents)
+        {
+            var dictionary = new Dictionary<string, List<DocumentData>>();
+            foreach (var document in documents)
+            {
+                if (!dictionary.TryGetValue(document.OwnerName, out _))
+                {
+                    dictionary[document.OwnerName] = new List<DocumentData>();
+                }
+                dictionary[document.OwnerName].Add(document);
+            }
+            return dictionary.Values;
         }
 
         private record FormSettings(Point Location, Size Size)

@@ -60,14 +60,14 @@
             // printButton
             // 
             this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(180, 22);
+            this.printButton.Size = new System.Drawing.Size(165, 22);
             this.printButton.Text = "Печать";
             this.printButton.Click += new System.EventHandler(this.PrintButtonClickHandler);
             // 
             // clearSelectionButton
             // 
             this.clearSelectionButton.Name = "clearSelectionButton";
-            this.clearSelectionButton.Size = new System.Drawing.Size(180, 22);
+            this.clearSelectionButton.Size = new System.Drawing.Size(165, 22);
             this.clearSelectionButton.Text = "Очистить выбор";
             this.clearSelectionButton.Click += new System.EventHandler(this.ClearSelectionButtonClickHandler);
             // 
@@ -96,7 +96,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(500, 500);
+            this.MaximumSize = new System.Drawing.Size(700, 700);
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "MdiForm";
             this.Text = "DocumentPrinter";

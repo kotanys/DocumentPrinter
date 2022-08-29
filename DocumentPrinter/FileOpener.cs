@@ -6,7 +6,11 @@ namespace DocumentPrinter
     {
         public void Open(string file)
         {
-            Process.Start(file);
+            //var processStartInfo = new ProcessStartInfo(@"Documents\\" +Path.GetFileName(file))
+            //{
+            //    WorkingDirectory = Environment.CurrentDirectory + @"\Documents"
+            //};
+            //Process.Start(processStartInfo);
         }
     }
 }
