@@ -36,10 +36,18 @@ namespace DocumentPrinter
             services.AddSingleton<IFileValidator, FileValidator>();
             services.AddSingleton<IConfiguration>(_ =>
             {
-                var json = File.ReadAllText("config.json");
-                return JsonSerializer.Deserialize<Configuration>(json) ?? Configuration.Empty;
+                try
+                {
+                    var json = File.ReadAllText("config.json");
+                    return JsonSerializer.Deserialize<Configuration>(json) ?? Configuration.Empty;
+                }
+                catch
+                {
+                    return Configuration.Empty;
+                }
             });
             services.AddSingleton<IMessageShower, MessageShower>();
+            services.AddSingleton<IFormsFactory, FormsFactory>();
             services.AddSingleton<MdiForm>();
 
             return services.BuildServiceProvider();

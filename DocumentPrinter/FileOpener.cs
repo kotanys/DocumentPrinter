@@ -4,13 +4,19 @@ namespace DocumentPrinter
 {
     internal class FileOpener : IFileOpener
     {
+        private readonly IConfiguration _configuration;
+
+        public FileOpener(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public void Open(string file)
         {
-            //var processStartInfo = new ProcessStartInfo(@"Documents\\" +Path.GetFileName(file))
-            //{
-            //    WorkingDirectory = Environment.CurrentDirectory + @"\Documents"
-            //};
-            //Process.Start(processStartInfo);
+            if (_configuration.ImageOpenerProgram is { } opener)
+            {
+                Process.Start(opener, file);
+            }
         }
     }
 }

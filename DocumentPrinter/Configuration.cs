@@ -6,5 +6,6 @@ namespace DocumentPrinter
     {
         public static readonly Configuration Empty = new();
         public string RelativePathToDocuments { get; set; } = "";
+        public string? ImageOpenerProgram { get; set; }
     }
 }

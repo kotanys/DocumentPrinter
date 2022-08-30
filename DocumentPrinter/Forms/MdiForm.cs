@@ -9,6 +9,7 @@ namespace DocumentPrinter.Forms
         private readonly IPrinter _printer;
         private readonly IFileOpener _fileOpener;
         private readonly IConfiguration _configuration;
+        private readonly IFormsFactory _formsFactory;
         private readonly DocumentData[] _documents;
 
         private ChooseDocumentsForm? _currentDocumentsForm;
@@ -16,33 +17,40 @@ namespace DocumentPrinter.Forms
         private readonly ChooseNameForm _nameForm;
         private readonly CheckedDocumentsListForm _checkedDocumentsListForm;
 
-        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IConfiguration configuration)
+        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IConfiguration configuration, IFormsFactory formsFactory)
         {
             _documentsProvider = documentsProvider;
             _documentDataExtracter = documentDataExtracter;
             _printer = printer;
             _fileOpener = fileOpener;
             _configuration = configuration;
+            _formsFactory = formsFactory;
             var files = _documentsProvider.GetDocumentFileNames();
             _documents = files.Select(_documentDataExtracter.Extract).ToArray();
 
             InitializeComponent();
-            _nameForm = CreateChooseNameForm();
-            _checkedDocumentsListForm = CreateCheckedDocumentsListForm();
+            _nameForm = _formsFactory.CreateChooseNameForm(_documents, mdiParent: this);
+            _checkedDocumentsListForm = _formsFactory.CreateCheckedDocumentsListForm(mdiParent: this);
             foreach (var documents in GetDatasDistinctByName(_documents))
             {
-                var form = CreateChooseDocumentForm(documents);
+                var form = _formsFactory.CreateChooseDocumentForm(documents, mdiParent: this);
                 _documentForms[documents.First().OwnerName] = form;
             }
+            ConfigureEventHandlers();
             _nameForm.Show();
         }
 
-        public void ShowMessage(string message)
+        private void ConfigureEventHandlers()
         {
-            MessageBox.Show(message);
+            _nameForm.NameSwitched += NameSwitchedHandler;
+            _checkedDocumentsListForm.DocumentClicked += DocumentClickedHandler;
+            foreach (var form in _documentForms.Values)
+            {
+                form.DocumentCheckStateChanged += DocumentCheckStateChangedHandler;
+            }
         }
 
-        private void DocumentCheckStateChangerHandler(object? sender, CheckStateChangedEventArgs e)
+        private void DocumentCheckStateChangedHandler(object? sender, CheckStateChangedEventArgs e)
         {
             var path = _documents.Where(d => d.OwnerName == _nameForm.CurrentName && d.DocumentName == e.Value).Single().FileName;
             var file = Path.GetFileName(path);
@@ -69,37 +77,7 @@ namespace DocumentPrinter.Forms
             lastFormSettings?.SetTo(_currentDocumentsForm);
         }
 
-        private ChooseNameForm CreateChooseNameForm()
-        { 
-            var form = new ChooseNameForm(_documents.Select(d => d.OwnerName).Distinct())
-            {
-                MdiParent = this
-            };
-            form.NameSwitched += NameSwitchedHandler;
-            return form;
-        }
-
-        private ChooseDocumentsForm CreateChooseDocumentForm(IEnumerable<DocumentData> documents)
-        {
-            var form = new ChooseDocumentsForm(documents)
-            {
-                MdiParent = this
-            };
-            form.DocumentCheckStateChanged += DocumentCheckStateChangerHandler;
-            return form;
-        }
-
-        private CheckedDocumentsListForm CreateCheckedDocumentsListForm()
-        {
-            var form = new CheckedDocumentsListForm()
-            {
-                MdiParent = this
-            };
-            form.DocumentClicked += CheckedDocumentsListFormElementClickedHandler;
-            return form;
-        }
-
-        private void CheckedDocumentsListFormElementClickedHandler(object? sender, ListBoxElementClickedEventArgs e)
+        private void DocumentClickedHandler(object? sender, ListBoxElementClickedEventArgs e)
         {
             var file = _documents.Single(
                 d => Path.GetFileName((ReadOnlySpan<char>) d.FileName).SequenceEqual(e.Element)).FileName;
