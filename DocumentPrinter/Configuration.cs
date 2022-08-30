@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace DocumentPrinter
+﻿namespace DocumentPrinter
 {
     internal class Configuration : IConfiguration
     {

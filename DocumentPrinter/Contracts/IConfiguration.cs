@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace DocumentPrinter.Contracts
+﻿namespace DocumentPrinter.Contracts
 {
     public interface IConfiguration
     {

@@ -63,7 +63,7 @@ namespace DocumentPrinter.Forms
         {
             base.WndProc(ref m);
             if (m.Msg == 0x84) //WM_NCHITTEST
-                m.Result = (HitTest) m.Result switch
+                m.Result = (HitTest)m.Result switch
                 {
                     HitTest.Top or HitTest.Bottom => (nint)HitTest.Caption,
                     HitTest.TopLeft or HitTest.BottomLeft => (nint)HitTest.Left,

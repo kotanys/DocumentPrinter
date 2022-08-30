@@ -18,11 +18,11 @@ namespace DocumentPrinter
             var form = _services.GetRequiredService<MdiForm>();
             Application.Run(form);
         }
-        
+
         private static IServiceProvider BuildServiceProvider()
         {
             var services = new ServiceCollection();
-            
+
 #if DEBUG
             services.AddSingleton<IDocumentsProvider, PseudoDocumentsProvider>();
             services.AddSingleton<IPrinter, DebugPrinter>();

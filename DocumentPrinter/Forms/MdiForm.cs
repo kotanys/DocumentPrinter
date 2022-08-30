@@ -80,7 +80,7 @@ namespace DocumentPrinter.Forms
         private void DocumentClickedHandler(object? sender, ListBoxElementClickedEventArgs e)
         {
             var file = _documents.Single(
-                d => Path.GetFileName((ReadOnlySpan<char>) d.FileName).SequenceEqual(e.Element)).FileName;
+                d => Path.GetFileName((ReadOnlySpan<char>)d.FileName).SequenceEqual(e.Element)).FileName;
             _fileOpener.Open(file);
         }
 
