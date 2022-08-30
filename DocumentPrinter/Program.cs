@@ -1,6 +1,7 @@
 #if DEBUG
 using DocumentPrinter.DebugClasses;
 #endif
+using System.Text.Json;
 using DocumentPrinter.Forms;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,7 +34,13 @@ namespace DocumentPrinter
 #endif
             services.AddSingleton<IDocumentDataExtracter, DocumentDataExtracter>();
             services.AddSingleton<IFileValidator, FileValidator>();
-            services.AddTransient<MdiForm>();
+            services.AddSingleton<IConfiguration>(_ =>
+            {
+                var json = File.ReadAllText("config.json");
+                return JsonSerializer.Deserialize<Configuration>(json) ?? Configuration.Empty;
+            });
+            services.AddSingleton<IMessageShower, MessageShower>();
+            services.AddSingleton<MdiForm>();
 
             return services.BuildServiceProvider();
         }

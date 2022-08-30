@@ -1,4 +1,6 @@
-﻿namespace DocumentPrinter.Forms
+﻿using DocumentPrinter.Models;
+
+namespace DocumentPrinter.Forms
 {
     public partial class CheckedDocumentsListForm : Form
     {

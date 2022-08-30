@@ -1,4 +1,4 @@
-﻿namespace DocumentPrinter.Forms
+﻿namespace DocumentPrinter.Models
 {
     public class ListBoxElementClickedEventArgs : EventArgs
     {

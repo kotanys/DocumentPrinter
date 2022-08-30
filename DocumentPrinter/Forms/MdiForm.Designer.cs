@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printButton = new System.Windows.Forms.ToolStripMenuItem();
             this.clearSelectionButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -40,22 +40,22 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.видToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.windowsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(434, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
+            // fileToolStripMenuItem
             // 
-            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printButton,
             this.clearSelectionButton});
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.файлToolStripMenuItem.Text = "Файл";
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.fileToolStripMenuItem.Text = "Файл";
             // 
             // printButton
             // 
@@ -71,13 +71,13 @@
             this.clearSelectionButton.Text = "Очистить выбор";
             this.clearSelectionButton.Click += new System.EventHandler(this.ClearSelectionButtonClickHandler);
             // 
-            // видToolStripMenuItem
+            // windowsToolStripMenuItem
             // 
-            this.видToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
-            this.видToolStripMenuItem.Name = "видToolStripMenuItem";
-            this.видToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.видToolStripMenuItem.Text = "Вид";
+            this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
+            this.windowsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.windowsToolStripMenuItem.Text = "Окна";
             // 
             // toolStripMenuItem1
             // 
@@ -110,10 +110,10 @@
         #endregion
 
         private MenuStrip menuStrip;
-        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem clearSelectionButton;
         private ToolStripMenuItem printButton;
-        private ToolStripMenuItem видToolStripMenuItem;
+        private ToolStripMenuItem windowsToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
     }
 }

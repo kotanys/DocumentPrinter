@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Forms;
-using DocumentPrinter.Models;
+﻿using DocumentPrinter.Models;
 
 namespace DocumentPrinter.Forms
 {
@@ -10,19 +8,21 @@ namespace DocumentPrinter.Forms
         private readonly IDocumentDataExtracter _documentDataExtracter;
         private readonly IPrinter _printer;
         private readonly IFileOpener _fileOpener;
+        private readonly IConfiguration _configuration;
         private readonly DocumentData[] _documents;
 
-        private ChooseDocumentsForm? _currentdocumentsForm;
+        private ChooseDocumentsForm? _currentDocumentsForm;
         private readonly Dictionary<string, ChooseDocumentsForm> _documentForms = new();
         private readonly ChooseNameForm _nameForm;
         private readonly CheckedDocumentsListForm _checkedDocumentsListForm;
 
-        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener)
+        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IConfiguration configuration)
         {
             _documentsProvider = documentsProvider;
             _documentDataExtracter = documentDataExtracter;
             _printer = printer;
             _fileOpener = fileOpener;
+            _configuration = configuration;
             var files = _documentsProvider.GetDocumentFileNames();
             _documents = files.Select(_documentDataExtracter.Extract).ToArray();
 
@@ -35,6 +35,11 @@ namespace DocumentPrinter.Forms
                 _documentForms[documents.First().OwnerName] = form;
             }
             _nameForm.Show();
+        }
+
+        public void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
         }
 
         private void DocumentCheckStateChangerHandler(object? sender, CheckStateChangedEventArgs e)
@@ -57,11 +62,11 @@ namespace DocumentPrinter.Forms
 
         private void NameSwitchedHandler(object? sender, ChosenNameEditedEventArgs e)
         {
-            var lastFormSettings = FormSettings.GetFrom(_currentdocumentsForm ?? _documentForms.First().Value);
-            _currentdocumentsForm?.Hide();
-            _currentdocumentsForm = _documentForms[e.Name];
-            _currentdocumentsForm.Show();
-            lastFormSettings?.SetTo(_currentdocumentsForm);
+            var lastFormSettings = FormSettings.GetFrom(_currentDocumentsForm ?? _documentForms.First().Value);
+            _currentDocumentsForm?.Hide();
+            _currentDocumentsForm = _documentForms[e.Name];
+            _currentDocumentsForm.Show();
+            lastFormSettings?.SetTo(_currentDocumentsForm);
         }
 
         private ChooseNameForm CreateChooseNameForm()
