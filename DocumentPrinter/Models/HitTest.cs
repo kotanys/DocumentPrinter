@@ -1,7 +1,7 @@
 ﻿namespace DocumentPrinter.Models
 {
     /// <summary>
-    /// Enum for hanling WM_NCHITTEST message
+    /// Enum for handling WM_NCHITTEST message
     /// </summary>
     internal enum HitTest
     {
