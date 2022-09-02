@@ -41,7 +41,7 @@
             this.documentNameListBox.Name = "documentNameListBox";
             this.documentNameListBox.Size = new System.Drawing.Size(129, 18);
             this.documentNameListBox.TabIndex = 0;
-            this.documentNameListBox.SelectedValueChanged += new System.EventHandler(this.documentNameListBox_SelectedValueChanged);
+            this.documentNameListBox.SelectedValueChanged += new System.EventHandler(this.DocumentNameListBoxSelectedValueChangedHandler);
             // 
             // ChooseDocumentsForm
             // 
@@ -53,7 +53,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ChooseDocumentsForm";
             this.Text = "Выберите документы";
-            this.Load += new System.EventHandler(this.FormLoadHandler);
             this.ResumeLayout(false);
 
         }

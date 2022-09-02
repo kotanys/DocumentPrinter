@@ -6,8 +6,8 @@ namespace DocumentPrinter.Forms
     {
         private const int ButtonHeight = 20;
 
-        private CheckState[] _selectedIndices = Array.Empty<CheckState>();
-        private readonly DocumentData[] _elements;
+        private readonly CheckState[] _selectedIndices;
+        private readonly DocumentData[] _documents;
 
         public IEnumerable<DocumentData> ChosenDocuments
         {
@@ -15,32 +15,28 @@ namespace DocumentPrinter.Forms
             {
                 foreach (int i in documentNameListBox.CheckedIndices)
                 {
-                    yield return _elements[i];
+                    yield return _documents[i];
                 }
             }
         }
 
-        public event EventHandler<CheckStateChangedEventArgs>? DocumentCheckStateChanged;
+        public event EventHandler<DocumentCheckStateChangedEventArgs>? DocumentCheckStateChanged;
 
-        public ChooseDocumentsForm(IEnumerable<DocumentData> elements)
+        public ChooseDocumentsForm(IEnumerable<DocumentData> documents)
         {
             InitializeComponent();
-            _elements = elements.ToArray();
-        }
-
-        private void FormLoadHandler(object sender, EventArgs e)
-        {
-            AddButtons(_elements);
+            _documents = documents.ToArray();
+            _selectedIndices = new CheckState[_documents.Length];
+            AddButtons();
             Height = ButtonHeight * (documentNameListBox.Items.Count + 2);
             MinimumSize = Size;
             MaximumSize = Size with { Width = Size.Width * 2 };
-            _selectedIndices = new CheckState[documentNameListBox.Items.Count];
         }
 
-        private void AddButtons(IEnumerable<DocumentData> datas)
+        private void AddButtons()
         {
             int heightForListBox = 0;
-            foreach (var data in datas)
+            foreach (var data in _documents)
             {
                 documentNameListBox.Items.Add(data.DocumentName);
                 heightForListBox += ButtonHeight;
@@ -53,6 +49,23 @@ namespace DocumentPrinter.Forms
             for (int i = 0; i < documentNameListBox.Items.Count; i++)
             {
                 documentNameListBox.SetItemChecked(i, false);
+            }
+        }
+
+        private void DocumentNameListBoxSelectedValueChangedHandler(object sender, EventArgs e)
+        {
+            for (int i = 0; i < documentNameListBox.Items.Count; i++)
+            {
+                CheckState checkStateOfCurrentButton = documentNameListBox.GetItemCheckState(i);
+                if (checkStateOfCurrentButton != _selectedIndices[i])
+                {
+                    var eventArgs = new DocumentCheckStateChangedEventArgs
+                    {
+                        NewState = _selectedIndices[i] = checkStateOfCurrentButton,
+                        Document = _documents[i]
+                    };
+                    DocumentCheckStateChanged?.Invoke(this, eventArgs);
+                }
             }
         }
 
@@ -70,24 +83,6 @@ namespace DocumentPrinter.Forms
                     HitTest.TopRight or HitTest.BottomRight => (nint)HitTest.Right,
                     _ => m.Result
                 };
-        }
-
-        private void documentNameListBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            CheckStateChangedEventArgs eventArgs;
-            for (int i = 0; i < documentNameListBox.Items.Count; i++)
-            {
-                CheckState checkStateOfCurrentButton = documentNameListBox.GetItemCheckState(i);
-                if (checkStateOfCurrentButton != _selectedIndices[i])
-                {
-                    eventArgs = new CheckStateChangedEventArgs
-                    {
-                        NewState = _selectedIndices[i] = checkStateOfCurrentButton,
-                        Value = documentNameListBox.Items[i].ToString()!
-                    };
-                    DocumentCheckStateChanged?.Invoke(this, eventArgs);
-                }
-            }
         }
     }
 }

@@ -48,9 +48,9 @@ namespace DocumentPrinter.Forms
             }
         }
 
-        private void DocumentCheckStateChangedHandler(object? sender, CheckStateChangedEventArgs e)
+        private void DocumentCheckStateChangedHandler(object? sender, DocumentCheckStateChangedEventArgs e)
         {
-            var document = _documents.Where(d => d.OwnerName == _nameForm.CurrentName && d.DocumentName == e.Value).Single();
+            var document = e.Document;
             switch (e.NewState)
             {
                 case CheckState.Unchecked:

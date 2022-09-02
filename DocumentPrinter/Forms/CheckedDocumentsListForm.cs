@@ -69,7 +69,7 @@ namespace DocumentPrinter.Forms
 
         private class DocumentFormatter
         {
-            public static DocumentFormatter FileName => new(data => data.FileName);
+            public static DocumentFormatter FileName => new(data => Path.GetFileName(data.FileName));
             public static DocumentFormatter UserFriendly => new(data => $"{data.OwnerName}: {data.DocumentName}");
 
             private readonly Func<DocumentData, string> _formatter;
