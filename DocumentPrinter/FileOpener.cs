@@ -15,7 +15,7 @@ namespace DocumentPrinter
         {
             if (_configuration.ImageOpenerProgram is { } opener)
             {
-                Process.Start(opener, @$"""{file}""");
+                Process.Start(opener, $"\"{file}\"");
             }
         }
     }

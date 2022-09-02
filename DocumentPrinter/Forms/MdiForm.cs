@@ -8,7 +8,6 @@ namespace DocumentPrinter.Forms
         private readonly IDocumentDataExtracter _documentDataExtracter;
         private readonly IPrinter _printer;
         private readonly IFileOpener _fileOpener;
-        private readonly IConfiguration _configuration;
         private readonly IFormsFactory _formsFactory;
         private readonly DocumentData[] _documents;
 
@@ -17,13 +16,12 @@ namespace DocumentPrinter.Forms
         private readonly ChooseNameForm _nameForm;
         private readonly CheckedDocumentsListForm _checkedDocumentsListForm;
 
-        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IConfiguration configuration, IFormsFactory formsFactory)
+        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IFormsFactory formsFactory)
         {
             _documentsProvider = documentsProvider;
             _documentDataExtracter = documentDataExtracter;
             _printer = printer;
             _fileOpener = fileOpener;
-            _configuration = configuration;
             _formsFactory = formsFactory;
             var files = _documentsProvider.GetDocumentFileNames();
             _documents = files.Select(_documentDataExtracter.Extract).ToArray();
@@ -52,18 +50,14 @@ namespace DocumentPrinter.Forms
 
         private void DocumentCheckStateChangedHandler(object? sender, CheckStateChangedEventArgs e)
         {
-            var path = _documents.Where(d => d.OwnerName == _nameForm.CurrentName && d.DocumentName == e.Value).Single().FileName;
-            var file = Path.GetFileName(path);
+            var document = _documents.Where(d => d.OwnerName == _nameForm.CurrentName && d.DocumentName == e.Value).Single();
             switch (e.NewState)
             {
                 case CheckState.Unchecked:
-                    _checkedDocumentsListForm.RemoveElement(file);
+                    _checkedDocumentsListForm.RemoveDocument(document);
                     break;
                 case CheckState.Checked:
-                    _checkedDocumentsListForm.AddElement(file);
-                    break;
-                case CheckState.Indeterminate:
-                default:
+                    _checkedDocumentsListForm.AddDocument(document);
                     break;
             }
         }
@@ -74,13 +68,12 @@ namespace DocumentPrinter.Forms
             _currentDocumentsForm?.Hide();
             _currentDocumentsForm = _documentForms[e.Name];
             _currentDocumentsForm.Show();
-            lastFormSettings?.SetTo(_currentDocumentsForm);
+            lastFormSettings.SetTo(_currentDocumentsForm);
         }
 
-        private void DocumentClickedHandler(object? sender, ListBoxElementClickedEventArgs e)
+        private void DocumentClickedHandler(object? sender, DocumentClickedEventArgs e)
         {
-            var file = _documents.Single(
-                d => Path.GetFileName((ReadOnlySpan<char>)d.FileName).SequenceEqual(e.Element)).FileName;
+            var file = e.Document.FileName;
             _fileOpener.Open(file);
         }
 

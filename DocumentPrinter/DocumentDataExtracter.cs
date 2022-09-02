@@ -20,10 +20,20 @@ namespace DocumentPrinter
             var onlyFileName = Path.GetFileName(fileNameSpan);
             return new DocumentData
             {
-                OwnerName = onlyFileName[..onlyFileName.IndexOf(Separator)].ToString().Trim(),
-                DocumentName = onlyFileName[(onlyFileName.IndexOf(Separator) + 1)..onlyFileName.LastIndexOf(Separator)].ToString().Trim(),
+                OwnerName = GetFirstPart(onlyFileName).ToString().Trim(),
+                DocumentName = GetMiddlePart(onlyFileName).ToString().Trim(),
                 FileName = fileName,
             };
+        }
+
+        private static ReadOnlySpan<char> GetFirstPart(ReadOnlySpan<char> onlyFileName)
+        {
+            return onlyFileName[..onlyFileName.IndexOf(Separator)];
+        }
+
+        private static ReadOnlySpan<char> GetMiddlePart(ReadOnlySpan<char> onlyFileName)
+        {
+            return onlyFileName[(onlyFileName.IndexOf(Separator) + 1)..onlyFileName.LastIndexOf(Separator)];
         }
     }
 }
