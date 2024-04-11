@@ -33,6 +33,7 @@ namespace DocumentPrinter.Forms
         public void RemoveAll()
         {
             listBox.Items.Clear();
+            _documents.Clear();
             UpdateListPresenter();
         }
 

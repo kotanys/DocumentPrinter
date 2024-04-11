@@ -18,5 +18,10 @@ namespace DocumentPrinter
                 Process.Start(opener, $"\"{file}\"");
             }
         }
+
+        public void OpenDirectory(string directory)
+        {
+            Process.Start("explorer", directory);
+        }
     }
 }

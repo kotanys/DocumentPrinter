@@ -9,6 +9,11 @@ namespace DocumentPrinter.DebugClasses
         {
             Debug.WriteLine($"On Release mode would open {file}");
         }
+
+        public void OpenDirectory(string directory)
+        {
+            Debug.WriteLine($"On Release mode would open directory {directory}");
+        }
     }
 }
 #endif

@@ -15,8 +15,9 @@ namespace DocumentPrinter.Forms
         private readonly Dictionary<string, ChooseDocumentsForm> _documentForms = new();
         private readonly ChooseNameForm _nameForm;
         private readonly CheckedDocumentsListForm _checkedDocumentsListForm;
+        private readonly IConfiguration _configuration;
 
-        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IFormsFactory formsFactory)
+        public MdiForm(IDocumentsProvider documentsProvider, IDocumentDataExtracter documentDataExtracter, IPrinter printer, IFileOpener fileOpener, IFormsFactory formsFactory, IConfiguration configuration)
         {
             _documentsProvider = documentsProvider;
             _documentDataExtracter = documentDataExtracter;
@@ -36,6 +37,7 @@ namespace DocumentPrinter.Forms
             }
             ConfigureEventHandlers();
             _nameForm.Show();
+            this._configuration = configuration;
         }
 
         private void ConfigureEventHandlers()
@@ -109,6 +111,17 @@ namespace DocumentPrinter.Forms
                 dictionary[document.OwnerName].Add(document);
             }
             return dictionary.Values;
+        }
+
+        private void OnFormClosingHandler(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void OnOpenDocumentsFolderButtonPressedHandler(object sender, EventArgs e)
+        {
+            var absolutePath = Path.GetFullPath(_configuration.RelativePathToDocuments);
+            _fileOpener.OpenDirectory(absolutePath);
         }
 
         private record FormSettings(Point Location, Size Size)

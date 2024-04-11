@@ -28,83 +28,86 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearSelectionButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip.SuspendLayout();
-            this.SuspendLayout();
+            menuStrip = new MenuStrip();
+            fileToolStripMenuItem = new ToolStripMenuItem();
+            printButton = new ToolStripMenuItem();
+            clearSelectionButton = new ToolStripMenuItem();
+            windowsToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            OpenDocumentFolderButton = new ToolStripMenuItem();
+            menuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // menuStrip
             // 
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.windowsToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(434, 24);
-            this.menuStrip.TabIndex = 1;
-            this.menuStrip.Text = "menuStrip1";
+            menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, windowsToolStripMenuItem });
+            menuStrip.Location = new Point(0, 0);
+            menuStrip.Name = "menuStrip";
+            menuStrip.Size = new Size(434, 24);
+            menuStrip.TabIndex = 1;
+            menuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printButton,
-            this.clearSelectionButton});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.fileToolStripMenuItem.Text = "Файл";
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { printButton, clearSelectionButton, OpenDocumentFolderButton });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new Size(48, 20);
+            fileToolStripMenuItem.Text = "Файл";
             // 
             // printButton
             // 
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(165, 22);
-            this.printButton.Text = "Печать";
-            this.printButton.Click += new System.EventHandler(this.PrintButtonClickHandler);
+            printButton.Name = "printButton";
+            printButton.Size = new Size(224, 22);
+            printButton.Text = "Печать";
+            printButton.Click += PrintButtonClickHandler;
             // 
             // clearSelectionButton
             // 
-            this.clearSelectionButton.Name = "clearSelectionButton";
-            this.clearSelectionButton.Size = new System.Drawing.Size(165, 22);
-            this.clearSelectionButton.Text = "Очистить выбор";
-            this.clearSelectionButton.Click += new System.EventHandler(this.ClearSelectionButtonClickHandler);
+            clearSelectionButton.Name = "clearSelectionButton";
+            clearSelectionButton.Size = new Size(224, 22);
+            clearSelectionButton.Text = "Очистить выбор";
+            clearSelectionButton.Click += ClearSelectionButtonClickHandler;
             // 
             // windowsToolStripMenuItem
             // 
-            this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
-            this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
-            this.windowsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.windowsToolStripMenuItem.Text = "Окна";
+            windowsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
+            windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
+            windowsToolStripMenuItem.Size = new Size(47, 20);
+            windowsToolStripMenuItem.Text = "Окна";
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
-            this.toolStripMenuItem1.Text = "Выбранные документы";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.ChosenDocumentsButtonClickHandler);
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(203, 22);
+            toolStripMenuItem1.Text = "Выбранные документы";
+            toolStripMenuItem1.Click += ChosenDocumentsButtonClickHandler;
+            // 
+            // OpenDocumentFolderButton
+            // 
+            OpenDocumentFolderButton.Name = "OpenDocumentFolderButton";
+            OpenDocumentFolderButton.Size = new Size(224, 22);
+            OpenDocumentFolderButton.Text = "Открыть папку документов";
+            OpenDocumentFolderButton.Click += OnOpenDocumentsFolderButtonPressedHandler;
             // 
             // MdiForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(434, 411);
-            this.Controls.Add(this.menuStrip);
-            this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(700, 700);
-            this.MinimumSize = new System.Drawing.Size(300, 300);
-            this.Name = "MdiForm";
-            this.Text = "DocumentPrinter";
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.AppWorkspace;
+            ClientSize = new Size(434, 411);
+            Controls.Add(menuStrip);
+            IsMdiContainer = true;
+            MainMenuStrip = menuStrip;
+            MaximizeBox = false;
+            MaximumSize = new Size(700, 700);
+            MinimumSize = new Size(300, 300);
+            Name = "MdiForm";
+            Text = "DocumentPrinter";
+            FormClosing += OnFormClosingHandler;
+            menuStrip.ResumeLayout(false);
+            menuStrip.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -115,5 +118,6 @@
         private ToolStripMenuItem printButton;
         private ToolStripMenuItem windowsToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem OpenDocumentFolderButton;
     }
 }

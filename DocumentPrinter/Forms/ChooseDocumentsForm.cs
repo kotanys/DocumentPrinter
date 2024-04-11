@@ -49,6 +49,7 @@ namespace DocumentPrinter.Forms
             for (int i = 0; i < documentNameListBox.Items.Count; i++)
             {
                 documentNameListBox.SetItemChecked(i, false);
+                _selectedIndices[i] = CheckState.Unchecked;
             }
         }
 
